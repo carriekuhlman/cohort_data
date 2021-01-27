@@ -16,6 +16,16 @@ def all_houses(filename):
     """
 
     houses = set()
+    # split the lines
+    # find item @ index 2
+    # add to the houses set 
+    files = open(filename)
+    for line in files:
+      split_line = line.split("|")
+      if split_line[2] == '':
+        pass
+      else:
+        houses.add(split_line[2])
 
     # TODO: replace this with your code
 
@@ -53,6 +63,26 @@ def students_by_cohort(filename, cohort='All'):
     students = []
 
     # TODO: replace this with your code
+    # open the file
+    # Split the lines
+    # find the set for index[4]
+    # iterate over the list by cohort_set
+    cohort_set = set()
+    files = open(filename)
+
+    for line in files:
+      split_line = line.split("|")
+      if cohort == "All":
+        if len(split_line[4]) > 2:
+          student = f"{split_line[0]} {split_line[1]}"
+          students.append(student)
+      else: 
+        if split_line[4] == cohort: 
+          student = f"{split_line[0]} {split_line[1]}"
+          students.append(student)
+    
+    # for line in files:
+    #   if split_line[4]
 
     return sorted(students)
 
