@@ -67,7 +67,6 @@ def students_by_cohort(filename, cohort='All'):
     # Split the lines
     # find the set for index[4]
     # iterate over the list by cohort_set
-    cohort_set = set()
     files = open(filename)
 
     for line in files:
@@ -77,7 +76,7 @@ def students_by_cohort(filename, cohort='All'):
           student = f"{split_line[0]} {split_line[1]}"
           students.append(student)
       else: 
-        if split_line[4] == cohort: 
+        if split_line[4].rstrip() == cohort: 
           student = f"{split_line[0]} {split_line[1]}"
           students.append(student)
     
@@ -85,7 +84,6 @@ def students_by_cohort(filename, cohort='All'):
     #   if split_line[4]
 
     return sorted(students)
-
 
 def all_names_by_house(filename):
     """Return a list that contains rosters for all houses, ghosts, instructors.
@@ -126,10 +124,37 @@ def all_names_by_house(filename):
     ghosts = []
     instructors = []
 
-    # TODO: replace this with your code
+    names_by_house = [dumbledores_army, gryffindor, hufflepuff, 
+                    ravenclaw, slytherin, ghosts, instructors]
 
-    return []
+    files = open(filename)
 
+    for line in files: 
+      split_line = line.split("|")
+
+      if split_line[-1] == "I\n": 
+        instructors.append(f'{split_line[0]} {split_line[1]}')
+
+      elif split_line[-1] == "G\n":
+        ghosts.append(f'{split_line[0]} {split_line[1]}')
+
+      else:
+        house = split_line[2]
+        if house.startswith("D"):
+          dumbledores_army.append(f'{split_line[0]} {split_line[1]}')
+        elif house.startswith("G"):
+          gryffindor.append(f'{split_line[0]} {split_line[1]}')
+        elif house.startswith("H"):
+          hufflepuff.append(f'{split_line[0]} {split_line[1]}')
+        elif house.startswith("R"):
+          ravenclaw.append(f'{split_line[0]} {split_line[1]}')
+        else: 
+          slytherin.append(f'{split_line[0]} {split_line[1]}')
+
+        for house in names_by_house:
+          house.sort()
+
+    return names_by_house
 
 def all_data(filename):
     """Return all the data in a file.
